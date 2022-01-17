@@ -31,7 +31,7 @@ ma = Marshmallow(app)
 
 class EffectsProfileSchema(ma.Schema):
     class Meta:
-        fields = ('title','author','effect1Name','effect1Param1Name', 'isSelected')
+        fields = ('title','author','tremoloFreq', 'tremoloDepth', 'tremoloEnabled', 'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 'isSelected')
 
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)
@@ -39,6 +39,7 @@ effects_profiles_schema = EffectsProfileSchema(many=True)
 @app.before_request
 def only_json():
     if not request.is_json and (request.method == 'POST' or request.method == 'DELETE'): 
+        print(request.content_type)
         abort(400)  # or any custom BadRequest message
 
 @app.route('/staticContent/<path:path>')
@@ -73,17 +74,16 @@ def newBook():
 
 
 # This will let us Delete our book
-@app.route('/effectsProfile/<string:profile_title>/', methods=['GET', 'POST', 'DELETE'])
-def deleteBook(profile_title):
+@app.route('/effectsProfile/', methods=['GET', 'POST', 'DELETE'])
+def deleteBook():
     session = DBSession()
     session.execute("begin exclusive transaction")
     
     if request.method == 'POST':
-        requestedProfile = session.query(EffectsProfile).filter_by(title=profile_title).one_or_none()
+        jsonData = request.get_json()
+        
+        requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if requestedProfile == None:
-            print(request.json)
-            jsonData = request.get_json()
-            print(jsonData)
             newBook = EffectsProfile(**jsonData)
             session.add(newBook)
             session.commit()
@@ -98,7 +98,9 @@ def deleteBook(profile_title):
         status_code = Response(status=200)
         return status_code
     elif request.method == 'GET':
-        requestedProfile = session.query(EffectsProfile).filter_by(title=profile_title).one_or_none()
+        jsonData = request.get_json()
+        
+        requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if requestedProfile == None:
             session.commit()
             session.close()
@@ -109,7 +111,9 @@ def deleteBook(profile_title):
         session.close()
         return jsonify(result)
     elif request.method == 'DELETE':
-        requestedProfile = session.query(EffectsProfile).filter_by(title=profile_title).one_or_none()
+        jsonData = request.get_json()
+        
+        requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if requestedProfile == None:
             session.commit()
             session.close()

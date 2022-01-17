@@ -22,8 +22,13 @@ class EffectsProfile(Base):
     #id = Column(Integer, primary_key=True)
     title = Column(String(250), primary_key=True, nullable=False)
     author = Column(String(250), nullable=False)
-    effect1Name = Column(String(250), nullable=False)
-    effect1Param1Name = Column(String(250), nullable=False)
+    tremoloFreq = Column(Float, nullable=False)
+    tremoloDepth = Column(Integer, nullable=False)
+    tremoloEnabled = Column(Boolean, nullable=False)
+    tremoloOrderNumber = Column(Integer, nullable=False)
+    overDriveThresh = Column(Float, nullable=False)
+    overDriveEnabled = Column(Boolean, nullable=False)
+    overDriveOrderNumber = Column(Integer, nullable=False)
     isSelected = Column(Boolean, nullable=False)
 
 
