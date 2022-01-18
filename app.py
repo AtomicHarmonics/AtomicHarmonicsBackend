@@ -54,7 +54,6 @@ def showEffectProfiles():
     session.execute("begin exclusive transaction")
     effectProfiles = session.query(EffectsProfile).all()
     result = effects_profiles_schema.dump(effectProfiles)
-    print(result)
     session.execute("commit")
     session.close()
     return jsonify(result)
@@ -91,6 +90,7 @@ def deleteBook():
             status_code = Response(status=200)
             return status_code
         dictData = request.get_json()
+        dictData["isSelected"] = requestedProfile.isSelected
         for key, value in dictData.items():
             setattr(requestedProfile, key, value)
         session.commit()
