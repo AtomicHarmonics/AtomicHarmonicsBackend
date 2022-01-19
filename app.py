@@ -46,8 +46,7 @@ def only_json():
 def send_js(path):
     return send_from_directory('staticContent', path)
 
-# landing page that will display all the books in our database
-# This function operate on the Read operation.
+# landing page that will display all the profiles in our database
 @app.route('/effectsProfiles', methods=['GET'])
 def showEffectProfiles():
     session = DBSession()
@@ -58,23 +57,12 @@ def showEffectProfiles():
     session.close()
     return jsonify(result)
 
-# This will let us Create a new book and save it in our database
-@app.route('/books/new/', methods=['POST'])
-def newBook():
-    session = DBSession()
-    jsonData = request.get_json()
-    print(jsonData)
-    newBook = EffectsProfile(**jsonData)
-    session.add(newBook)
-    session.commit()
-    session.close()
-    status_code = Response(status=200)
-    return status_code
 
 
-# This will let us Delete our book
+
+# This will let us add/change/delete profiles
 @app.route('/effectsProfile/', methods=['GET', 'POST', 'DELETE'])
-def deleteBook():
+def changeProfile():
     session = DBSession()
     session.execute("begin exclusive transaction")
     
@@ -83,8 +71,8 @@ def deleteBook():
         
         requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if requestedProfile == None:
-            newBook = EffectsProfile(**jsonData)
-            session.add(newBook)
+            newProfile = EffectsProfile(**jsonData)
+            session.add(newProfile)
             session.commit()
             session.close()
             status_code = Response(status=200)
