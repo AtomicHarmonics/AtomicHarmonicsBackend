@@ -31,7 +31,7 @@ ma = Marshmallow(app)
 
 class EffectsProfileSchema(ma.Schema):
     class Meta:
-        fields = ('title','author','tremoloFreq', 'tremoloDepth', 'tremoloEnabled', 'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 'isSelected')
+        fields = ('title','author','tremoloFreq', 'tremoloDepth', 'tremoloEnabled', 'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 'distortThresh', 'distortEnabled', 'distortOrderNumber', 'isSelected')
 
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)

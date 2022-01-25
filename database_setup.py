@@ -29,6 +29,10 @@ class EffectsProfile(Base):
     overDriveThresh = Column(Float, nullable=False)
     overDriveEnabled = Column(Boolean, nullable=False)
     overDriveOrderNumber = Column(Integer, nullable=False)
+    distortThresh = Column(Float, nullable=False)
+    distortEnabled = Column(Boolean, nullable=False)
+    distortOrderNumber = Column(Integer, nullable=False)
+    
     isSelected = Column(Boolean, nullable=False)
 
 
