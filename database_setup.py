@@ -32,6 +32,8 @@ class EffectsProfile(Base):
     distortThresh = Column(Float, nullable=False)
     distortEnabled = Column(Boolean, nullable=False)
     distortOrderNumber = Column(Integer, nullable=False)
+    reverbEnabled = Column(Boolean, nullable=False)
+    reverbOrderNumber = Column(Integer, nullable=False)
     
     isSelected = Column(Boolean, nullable=False)
 
