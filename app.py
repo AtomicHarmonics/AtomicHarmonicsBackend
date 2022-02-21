@@ -29,12 +29,21 @@ DBSession = scoped_session(sessionmaker(bind=engine))
 
 ma = Marshmallow(app)
 
+'''    verblib_set_wet ( verb, verblib_initialwet );
+    verblib_set_room_size ( verb, verblib_initialroom );
+    verblib_set_dry ( verb, verblib_initialdry );
+    verblib_set_damping ( verb, verblib_initialdamp );
+    verblib_set_width ( verb, verblib_initialwidth );
+    verblib_set_mode ( verb, verblib_initialmode );'''
+
+
 class EffectsProfileSchema(ma.Schema):
     class Meta:
         fields = ('title','author','tremoloFreq', 'tremoloDepth', 'tremoloEnabled', 
                  'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 
-                 'distortThresh', 'distortEnabled', 'distortOrderNumber', 'reverbEnabled', 'reverbOrderNumber', 
-                 'isSelected')
+                 'distortThresh', 'distortEnabled', 'distortOrderNumber', 'reverbWetLevel', 'reverbRoomSize', 
+                 'reverbDryLevel', 'reverbDampLevel', 'reverbWidth','reverbEnabled', 'reverbMode',
+                 'reverbOrderNumber', 'isSelected')
 
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)

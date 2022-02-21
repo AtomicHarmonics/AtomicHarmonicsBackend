@@ -22,16 +22,26 @@ class EffectsProfile(Base):
     #id = Column(Integer, primary_key=True)
     title = Column(String(250), primary_key=True, nullable=False)
     author = Column(String(250), nullable=False)
+    
     tremoloFreq = Column(Float, nullable=False)
     tremoloDepth = Column(Integer, nullable=False)
     tremoloEnabled = Column(Boolean, nullable=False)
     tremoloOrderNumber = Column(Integer, nullable=False)
+    
     overDriveThresh = Column(Float, nullable=False)
     overDriveEnabled = Column(Boolean, nullable=False)
     overDriveOrderNumber = Column(Integer, nullable=False)
+    
     distortThresh = Column(Float, nullable=False)
     distortEnabled = Column(Boolean, nullable=False)
     distortOrderNumber = Column(Integer, nullable=False)
+    
+    reverbWetLevel = Column(Float, nullable=False)
+    reverbRoomSize = Column(Float, nullable=False)
+    reverbDryLevel = Column(Float, nullable=False)
+    reverbDampLevel = Column(Float, nullable=False) 
+    reverbWidth = Column(Float, nullable=False)
+    reverbMode = Column(Float, nullable=False)
     reverbEnabled = Column(Boolean, nullable=False)
     reverbOrderNumber = Column(Integer, nullable=False)
     
