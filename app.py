@@ -43,7 +43,7 @@ class EffectsProfileSchema(ma.Schema):
                  'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 
                  'distortThresh', 'distortEnabled', 'distortOrderNumber', 'reverbWetLevel', 'reverbRoomSize', 
                  'reverbDryLevel', 'reverbDampLevel', 'reverbWidth','reverbEnabled', 'reverbMode',
-                 'reverbOrderNumber', 'isSelected')
+                 'reverbOrderNumber', 'isSelected', 'preAmpEnabled', 'preAmpGain')
 
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)

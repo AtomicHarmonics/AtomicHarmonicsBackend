@@ -45,6 +45,9 @@ class EffectsProfile(Base):
     reverbEnabled = Column(Boolean, nullable=False)
     reverbOrderNumber = Column(Integer, nullable=False)
     
+    preAmpEnabled = Column(Boolean, nullable=False)
+    preAmpGain = Column(Float, nullable=False)
+
     isSelected = Column(Boolean, nullable=False)
 
 
