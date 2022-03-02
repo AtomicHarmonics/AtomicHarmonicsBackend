@@ -15,6 +15,8 @@ from sqlalchemy import create_engine
 # create declarative_base instance
 Base = declarative_base()
 
+BaseBypass = declarative_base()
+
 # we create the class Book and extend it from the Base Class.
 class EffectsProfile(Base):
     __tablename__ = 'effectsProfile'
@@ -51,7 +53,19 @@ class EffectsProfile(Base):
     isSelected = Column(Boolean, nullable=False)
 
 
+class BypassProfile(BaseBypass):
+    __tablename__ = 'bypassProfile'
+
+    #id = Column(Integer, primary_key=True)
+    bypassEnabled = Column(Boolean, primary_key=True, nullable=False)
+
+
 # creates a create_engine instance at the bottom of the file
 engine = create_engine('sqlite:///profile-collection.db')
 
 Base.metadata.create_all(engine)
+
+# creates a create_engine instance at the bottom of the file
+engine_bypass = create_engine('sqlite:///bypass-collection.db')
+
+BaseBypass.metadata.create_all(engine_bypass)

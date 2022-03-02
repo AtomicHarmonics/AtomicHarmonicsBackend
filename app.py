@@ -11,13 +11,19 @@ cors = CORS(app)
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
-from database_setup import Base, EffectsProfile
+from database_setup import Base, EffectsProfile, BypassProfile, BaseBypass
 
 # Connect to Database and create database session
 engine = create_engine('sqlite:///profile-collection.db',connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
 
 DBSession = scoped_session(sessionmaker(bind=engine))
+
+# Connect to Database and create database session
+engine_bypass = create_engine('sqlite:///bypass-collection.db',connect_args={'check_same_thread': False})
+BaseBypass.metadata.bind = engine_bypass
+
+DBSessionBypass = scoped_session(sessionmaker(bind=engine_bypass))
 
 #TODO: Ensure marshmallow is thread safe
 # add input data validation
@@ -45,8 +51,18 @@ class EffectsProfileSchema(ma.Schema):
                  'reverbDryLevel', 'reverbDampLevel', 'reverbWidth','reverbEnabled', 'reverbMode',
                  'reverbOrderNumber', 'isSelected', 'preAmpEnabled', 'preAmpGain')
 
+class BypassProfileSchema(ma.Schema):
+    class Meta:
+        fields = ('bypassEnabled',)
+
+bypass_profile_schema = BypassProfileSchema()
+bypass_profiles_schema = BypassProfileSchema(many=True)
+
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)
+
+
+
 
 @app.before_request
 def only_json():
@@ -70,7 +86,49 @@ def showEffectProfiles():
     return jsonify(result)
 
 
-
+# This will let us add/change/delete profiles
+@app.route('/byPass/', methods=['GET', 'POST'])
+def byPass():
+    session = DBSessionBypass()
+    session.execute("begin exclusive transaction")
+    
+    if request.method == 'POST':
+        jsonData = request.get_json()
+        
+        requestedProfile = session.query(BypassProfile).one_or_none()
+        if requestedProfile == None:
+            newProfile = BypassProfile(**jsonData)
+            session.add(newProfile)
+            session.commit()
+            session.close()
+            status_code = Response(status=200)
+            return status_code
+        dictData = request.get_json()
+        #dictData["bypassEnabled"] = requestedProfile.bypassEnabled
+        for key, value in dictData.items():
+            setattr(requestedProfile, key, value)
+        session.commit()
+        session.close()
+        status_code = Response(status=200)
+        return status_code
+    elif request.method == 'GET':
+        #jsonData = request.get_json()
+        bypassProfiles = session.query(BypassProfile).one_or_none()
+        #requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
+        if bypassProfiles == None:
+            tempDict = {"bypassEnabled": True}
+            newProfile = BypassProfile(**tempDict)
+            session.add(newProfile)
+            session.commit()
+            session.close()            
+            return jsonify(tempDict)
+        print(bypassProfiles)
+        result = bypass_profile_schema.dump(bypassProfiles)
+        
+        #result = effects_profile_schema.dump(requestedProfile)
+        session.commit()
+        session.close()
+        return jsonify(result)
 
 # This will let us add/change/delete profiles
 @app.route('/effectsProfile/', methods=['GET', 'POST', 'DELETE'])
@@ -162,4 +220,4 @@ def selectedProfile():
             return jsonify(result)
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='localhost', port=4996)#host='0.0.0.0' (for local network) host='localhost' (for this computer only)
+    app.run(host='0.0.0.0', port=4996)#host='0.0.0.0' (for local network) host='localhost' (for this computer only)
