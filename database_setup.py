@@ -48,6 +48,10 @@ class EffectsProfile(Base):
     preAmpEnabled = Column(Boolean, nullable=False)
     preAmpGain = Column(Float, nullable=False)
 
+    bitcrusherDownSample = Column(Integer, nullable=False)
+    bitcrusherEnabled = Column(Boolean, nullable=False)
+    bitcrusherOrderNumber = Column(Integer, nullable=False)
+
     isSelected = Column(Boolean, nullable=False)
 
 

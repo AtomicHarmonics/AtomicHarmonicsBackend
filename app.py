@@ -43,7 +43,8 @@ class EffectsProfileSchema(ma.Schema):
                  'tremoloOrderNumber', 'overDriveThresh', 'overDriveEnabled', 'overDriveOrderNumber', 
                  'distortThresh', 'distortEnabled', 'distortOrderNumber', 'reverbWetLevel', 'reverbRoomSize', 
                  'reverbDryLevel', 'reverbDampLevel', 'reverbWidth','reverbEnabled', 'reverbMode',
-                 'reverbOrderNumber', 'isSelected', 'preAmpEnabled', 'preAmpGain')
+                 'reverbOrderNumber', 'isSelected', 'preAmpEnabled', 'preAmpGain', 'bitcrusherDownSample','bitcrusherEnabled',
+                 'bitcrusherOrderNumber')
 
 effects_profile_schema = EffectsProfileSchema()
 effects_profiles_schema = EffectsProfileSchema(many=True)
@@ -162,4 +163,4 @@ def selectedProfile():
             return jsonify(result)
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='localhost', port=4996)#host='0.0.0.0' (for local network) host='localhost' (for this computer only)
+    app.run(host='0.0.0.0', port=4996)#host='0.0.0.0' (for local network) host='localhost' (for this computer only)
