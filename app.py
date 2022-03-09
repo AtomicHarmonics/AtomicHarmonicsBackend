@@ -117,7 +117,7 @@ def byPass():
         bypassProfiles = session.query(BypassProfile).one_or_none()
         #requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if bypassProfiles == None:
-            tempDict = {"bypassEnabled": True}
+            tempDict = {"bypassEnabled": False}
             newProfile = BypassProfile(**tempDict)
             session.add(newProfile)
             session.commit()
