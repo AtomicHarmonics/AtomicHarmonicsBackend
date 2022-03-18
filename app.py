@@ -8,6 +8,7 @@ import sqlite3
 app = Flask(__name__, static_url_path='')
 cors = CORS(app)
 
+secret_pass = "defaultPass"
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -191,6 +192,11 @@ def selectedProfile():
     session.execute("begin exclusive transaction")
     if request.method == 'POST':
         jsonData = request.get_json()
+        if(jsonData['password'] != secret_pass):
+            session.commit()
+            session.close()
+            status_code = Response(status=401)
+            return status_code
         requestedProfile = session.query(EffectsProfile).filter_by(title=jsonData['title']).one_or_none()
         if requestedProfile == None:
             session.commit()
