@@ -1,0 +1,12 @@
+[Unit]
+Description=Flask Service
+After=local-fs.target
+
+[Service]
+Type=simple
+TimeoutStopSec=7
+ExecStart=/bin/bash /var/lib/backendAssets/flaskServer-script
+
+
+[Install]
+WantedBy=default.target

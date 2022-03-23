@@ -1,0 +1,5 @@
+#!/bin/bash
+trap "exit" INT
+cd /home/mohammed/Desktop/projects/flaskLearning/flaskApplication
+source testEnv/bin/activate
+python app.py

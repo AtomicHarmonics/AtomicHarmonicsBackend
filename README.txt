@@ -1,5 +1,18 @@
+New Installation steps:
+1.) Modify paths in flaskServer-script, ffmpeg-script, to match current directory. Ex: change /home/mohammed/Desktop/projects/flaskLearning/flaskApplication to /home/yourComputer/projects/currentDirectory
+2.) run init_setup ex: 'source init_setup.sh'
+3.) run setupServices ex: 'source setupServices.sh'
 
-Installation steps:
+You do not need to repeat above steps every time, only once.
+
+Now installation is complete, to run the server and all other services, simply run : 'systemctl --user start flaskServer.service'.
+To stop the server simply run: 'systemctl --user stop flaskServer.service'
+
+to view current logs of the server, run: 'journalctl --user -f -u flaskServer.service'
+
+
+Installation steps (OBSOLETE!):
+-------------------------------------------
 pip install virtualenv
 virtualenv testEnv
 source testEnv/bin/activate
@@ -15,7 +28,7 @@ python app.py
 To exit:
 press ctrl and C to exit the application
 type 'deactivate' to exit your python virtualenvironment.
-
+------------------------------------------------------
 
 Server info:
 There are various endpoints that the server is setup to use, almost all of which recieve and transmit data via JSON.
