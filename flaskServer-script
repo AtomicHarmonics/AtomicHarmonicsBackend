@@ -1,5 +1,5 @@
 #!/bin/bash
 trap "exit" INT
-cd /home/mohammed/Desktop/projects/flaskLearning/flaskApplication
+cd /home/mohammed/Desktop/projects/tempDir/flaskTest/AtomicHarmonicsBackend
 source testEnv/bin/activate
 python app.py

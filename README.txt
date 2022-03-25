@@ -10,6 +10,7 @@ To stop the server simply run: 'systemctl --user stop flaskServer.service'
 
 to view current logs of the server, run: 'journalctl --user -f -u flaskServer.service'
 
+You will also don't need to run the front end seperately, the backend will serve it for you, simply head over to 'http://localhost:4996/staticContent/static/html/index.html' on your webbrowser to see the web application.
 
 Installation steps (OBSOLETE!):
 -------------------------------------------
