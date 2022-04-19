@@ -213,7 +213,7 @@ def selectedProfile():
             status_code = Response(status=200)
             return status_code
     elif request.method == 'GET':
-        jsonData = request.get_json()
+        #jsonData = request.get_json()
         currentSelected = session.query(EffectsProfile).filter_by(isSelected=True).one_or_none()
         if currentSelected == None:
             session.commit()
